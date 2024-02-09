@@ -8,12 +8,12 @@
         {
             _taxBrackets = new List<TaxBracket>
             {
-                new(0, 250_000m, 0, 0),
-                new(250_000m, 400_000m, 0, 15m),
-                new(400_000m, 800_000m, 22_500m, 20m),
-                new(800_000m, 2_000_000m, 102_500m, 25m),
-                new(2_000_000m, 8_000_000m, 402_500m, 30m),
-                new(8_000_000m, decimal.MaxValue, 2_202_500m, 35m)
+                new(0, 250_000, 0, 0),
+                new(250_000, 400_000, 0, 15),
+                new(400_000, 800_000, 22_500, 20),
+                new(800_000, 2_000_000, 102_500, 25),
+                new(2_000_000, 8_000_000, 402_500, 30),
+                new(8_000_000, 1_000_000_000, 2_202_500, 35)
             }.AsEnumerable();
         }
 
@@ -26,7 +26,12 @@
 
             var taxBracket = _taxBrackets
                 .Where(bracket => annualSalary >= bracket.MinSalary && annualSalary < bracket.MaxSalary)
-                .Single();
+                .SingleOrDefault();
+
+            if (taxBracket is null)
+            {
+                throw new InvalidOperationException("No tax bracket found for the specified annual amount");
+            }
 
             return taxBracket.FixTax + (annualSalary - taxBracket.MinSalary) * taxBracket.ExcessRate / 100;
         }

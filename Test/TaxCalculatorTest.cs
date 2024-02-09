@@ -12,7 +12,7 @@ namespace Test
         }
 
         [Fact]
-        public void Test_If_AnnualSalary_Is_LessThan_Zero()
+        public void Test_Should_Throw_If_Annual_Salary_Is_Less_Than_Zero()
         {
             var exception = Assert.Throws<InvalidOperationException>(() =>
             {
@@ -20,6 +20,17 @@ namespace Test
             });
 
             Assert.Equal("Annual salary should be greater than or equal to 0", exception.Message);
+        }
+
+        [Fact]
+        public void Test_Should_Throw_If_Tax_Bracket_Not_Found()
+        {
+            var exception = Assert.Throws<InvalidOperationException>(() =>
+            {
+                var annualTax = _taxCalculator.CalculateTax(1100000000);
+            });
+
+            Assert.Equal("No tax bracket found for the specified annual amount", exception.Message);
         }
 
         [Theory]
