@@ -27,7 +27,7 @@ namespace Test
         {
             var exception = Assert.Throws<InvalidOperationException>(() =>
             {
-                var annualTax = _taxCalculator.CalculateTax(1100000000);
+                var annualTax = _taxCalculator.CalculateTax(1_100_000_000);
             });
 
             Assert.Equal("No tax bracket found for the specified annual amount", exception.Message);
@@ -35,12 +35,12 @@ namespace Test
 
         [Theory]
         [InlineData(0, 0)]
-        [InlineData(250000, 0)]
-        [InlineData(350000, 15000)]
-        [InlineData(400000, 22500)]
-        [InlineData(450000, 32500)]
-        [InlineData(800000, 102500)]
-        [InlineData(1000000, 152500)]
+        [InlineData(250_000, 0)]
+        [InlineData(350_000, 15_000)]
+        [InlineData(400_000, 22_500)]
+        [InlineData(450_000, 32_500)]
+        [InlineData(800_000, 102_500)]
+        [InlineData(1_000_000, 152_500)]
         public void Test_Should_Return_Correct_Tax_Amount(decimal annualSalary, decimal expectedTax)
         {
             var annualTax = _taxCalculator.CalculateTax(annualSalary);

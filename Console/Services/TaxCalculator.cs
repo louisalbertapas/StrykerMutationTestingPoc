@@ -44,10 +44,10 @@
         public decimal FixTax { get; init; }
         public decimal ExcessRate { get; init; }
 
-        public TaxBracket(decimal min, decimal max, decimal fixTax, decimal excessRate)
+        public TaxBracket(decimal minSalary, decimal maxSalary, decimal fixTax, decimal excessRate)
         {
-            MinSalary = min;
-            MaxSalary = max;
+            MinSalary = minSalary;
+            MaxSalary = maxSalary;
             FixTax = fixTax;
             ExcessRate = excessRate;
         }
