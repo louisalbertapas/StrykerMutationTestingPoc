@@ -8,12 +8,12 @@
         {
             _taxBrackets = new List<TaxBracket>
             {
-                new(0, 250_000, 0, 0),
-                new(250_000.01m, 400_000, 0, 15),
-                new(400_000.01m, 800_000, 22_500, 20),
-                new(800_000.01m, 2_000_000, 102_500, 25),
-                new(2_000_000.01m, 8_000_000m, 402_500, 30),
-                new(8_000_000.01m, decimal.MaxValue, 2_202_500, 35)
+                new(0, 250_000m, 0, 0),
+                new(250_000m, 400_000m, 0, 15m),
+                new(400_000m, 800_000m, 22_500m, 20m),
+                new(800_000m, 2_000_000m, 102_500m, 25m),
+                new(2_000_000m, 8_000_000m, 402_500m, 30m),
+                new(8_000_000m, decimal.MaxValue, 2_202_500m, 35m)
             }.AsEnumerable();
         }
 
@@ -25,29 +25,24 @@
             }
 
             var taxBracket = _taxBrackets
-                .Where(bracket => annualSalary >= bracket.Min && annualSalary <= bracket.Max)
-                .SingleOrDefault();
+                .Where(bracket => annualSalary >= bracket.MinSalary && annualSalary < bracket.MaxSalary)
+                .Single();
 
-            if (taxBracket is null)
-            {
-                throw new InvalidOperationException($"The annual salary {annualSalary} does not belong to any tax bracket.");
-            }
-
-            return taxBracket.FixTax + (annualSalary - taxBracket.Min) * taxBracket.ExcessRate / 100;
+            return taxBracket.FixTax + (annualSalary - taxBracket.MinSalary) * taxBracket.ExcessRate / 100;
         }
     }
 
     internal class TaxBracket
     {
-        public decimal Min { get; init; }
-        public decimal Max { get; init; }
+        public decimal MinSalary { get; init; }
+        public decimal MaxSalary { get; init; }
         public decimal FixTax { get; init; }
         public decimal ExcessRate { get; init; }
 
         public TaxBracket(decimal min, decimal max, decimal fixTax, decimal excessRate)
         {
-            Min = min;
-            Max = max;
+            MinSalary = min;
+            MaxSalary = max;
             FixTax = fixTax;
             ExcessRate = excessRate;
         }
