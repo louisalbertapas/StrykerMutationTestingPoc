@@ -10,9 +10,7 @@ This simple POC uses Stryker.NET to mutate the targeted source code.
 Restore Stryker after cloning the project
 
 ```
-
 dotnet tool restore
-
 ```
 
 ## Documentation
